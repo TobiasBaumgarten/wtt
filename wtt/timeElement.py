@@ -13,7 +13,7 @@ class timeElement():
     def __init__(self, timeType: timeType, startDate: datetime, workingHours: datetime.timedelta = datetime.timedelta(hours=0)):
         self.timeType: timeType = timeType
         self.startDate: datetime = startDate
-        self._workingHours: datetime.timedelta = workingHours
+        self.workingHours: datetime.timedelta = workingHours
 
     @property
     def workingHours(self):
@@ -21,6 +21,8 @@ class timeElement():
 
     @workingHours.setter
     def workingHours(self, v: datetime.timedelta):
+        if self.timeType == timeType.flexitime and v > datetime.timedelta(hours=0):
+            raise ValueError("Flexitime cannot be positiv")
         self._workingHours = v
 
     def __add__(self, v):
